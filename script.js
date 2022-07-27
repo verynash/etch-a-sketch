@@ -1,4 +1,4 @@
-const DEFAULT_SIZE = 4;
+const DEFAULT_SIZE = 12;
 const DEFAULT_COLOR = '#5a0468';
 const DEFAULT_MODE = 'color';
 
