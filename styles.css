@@ -95,9 +95,10 @@ body {
     }
 }
 .grid-square {
-    border: 1px solid black;
-    width: 25px;
-    height: 25px;
+    border: 1px solid rgb(224, 255, 255, 0.25);
+    
+    max-width: 175px;
+    max-height: 175px;
 }
 .edit-wall {
     display: flex;

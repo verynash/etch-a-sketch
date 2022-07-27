@@ -1,4 +1,4 @@
-const DEFAULT_SIZE = '4';
+const DEFAULT_SIZE = 4;
 const DEFAULT_COLOR = '#5a0468';
 const DEFAULT_MODE = 'color';
 
@@ -39,7 +39,7 @@ gridSizeSlider.onchange = (e) => changeSize(e.target.value);
 clearBtn.onclick = () => refreshGrid();
 
 let mouseDown = false;
-document.drawWall.onmousedown = () => (mouseDown = true);
+document.body.onmousedown = () => (mouseDown = true);
 document.body.onmouseup = () => (mouseDown = false);
 
 function changeSize(value) {
@@ -59,6 +59,12 @@ function clearGrid() {
 function makeGrid(size) {
     drawWall.style.gridTemplateColumns = `repeat(${size}, 1fr)`
     drawWall.style.gridTemplateRows = `repeat(${size}, 1fr)`
+
+    for (let i = 0; i < size*size; i++) {
+        const gridSquare = document.createElement('div');
+        gridSquare.classList.add('grid-square');
+        drawWall.appendChild(gridSquare);
+    }
 }
 
 
@@ -72,5 +78,5 @@ function makeGrid(size) {
 
 
 window.onload = () => {
-    makeGrid(4);
+    makeGrid(DEFAULT_SIZE);
 }
