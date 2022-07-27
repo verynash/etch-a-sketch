@@ -16,21 +16,18 @@
     </div>
     <div class="content">
         <div class="pens-container">
-            <button class="pen-btn" id="penColor">Color&#8212<input type="color" value="#5a0468" id="inputColor"></button>
+            <button class="pen-btn" id="penColor">Color&#8212<input id="inputColor" type="color" value="#5a0468" ></button>
             <button class="pen-btn" id="penBlack">Black</button>
             <button class="pen-btn" id="penRainbow">Rainbow</button>
             <button class="pen-btn" id="penGrayscale">Grayscale</button>
             <button class="pen-btn" id="penEraser">Eraser<img src="./images/eraser.png" width="24px" height="auto"></button>
             <!-- https://www.flaticon.com/free-icon/eraser_1827954 -->
         </div>
-        <div id="draw-wall">
-        </div>
+        <div id="draw-wall"></div>
         <div class="edit-wall">
-            <button id="wallClear">Clear
-
-            </button>
-            <div class="gridSizeSlider">
-                <input type="range" min="3" max="100" value="4" class="slider" id="gridSizeSlider" step="1" onchange="updateSlider(this.value), deleteGrid(), makeGrid(this.value)">
+            <button id="wallClear">Clear</button>
+            <div id="sliderContainer">
+                <input  id="gridSize" type="range" min="3" max="100" value="4" class="slider" step="1" onchange="updateSlider(this.value), deleteGrid(), makeGrid(this.value)">
             </div>
         </div>
     </div>

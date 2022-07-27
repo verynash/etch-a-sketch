@@ -1,31 +1,76 @@
-let drawWall = document.getElementById('draw-wall');
-console.log(drawWall);
+const DEFAULT_SIZE = '4';
+const DEFAULT_COLOR = '#5a0468';
+const DEFAULT_MODE = 'color';
 
+let currentSize = DEFAULT_SIZE;
+let currentColor = DEFAULT_COLOR;
+let currentMode = DEFAULT_MODE;
 
-
-
-
-let gridSize = document.getElementById('gridSizeSlider');
-
-function updateSlider(slideAmount) {
-    gridSize.value = slideAmount;
+function setCurrentSize(newSize) {
+    currentSize = newSize;
 }
 
-function deleteGrid() {
-    document.getElementById('draw-wall').innerHTML = '';
+function setCurrentColor(newColor) {
+    currentColor = newColor;
+}
+
+function setCurrentMode(newMode) {
+    activateButton(newMode);
+    currentMode = newMode;
+}
+
+const inputColor = document.getElementById('inputColor');
+const colorBtn = document.getElementById('penColor');
+const blackBtn = document.getElementById('penBlack');
+const rainbowBtn = document.getElementById('penRainbow');
+const grayscaleBtn = document.getElementById('penGrayscale');
+const eraserBtn = document.getElementById('penEraser');
+const clearBtn = document.getElementById('wallClear');
+const gridSizeSlider = document.getElementById('gridSizeSlider')
+const drawWall = document.getElementById('draw-wall');
+
+inputColor.oninput = () => setCurrentColor(e.target.value);
+colorBtn.onclick = () => setCurrentMode('color');
+blackBtn.onclick = () => setCurrentMode('black');
+rainbowBtn.onclick = () => setCurrentMode('rainbow');
+grayscaleBtn.onclick = () => setCurrentMode('grayScale');
+eraserBtn.onclick = () => setCurrentMode('eraser');
+gridSizeSlider.onchange = (e) => changeSize(e.target.value);
+clearBtn.onclick = () => refreshGrid();
+
+let mouseDown = false;
+document.drawWall.onmousedown = () => (mouseDown = true);
+document.body.onmouseup = () => (mouseDown = false);
+
+function changeSize(value) {
+    setCurrentSize(value);
+    refreshGrid();
+}
+
+function refreshGrid() {
+    clearGrid();
+    makeGrid(currentSize);
+}
+
+function clearGrid() {
+    drawWall.innerHTML = '';
 }
 
 function makeGrid(size) {
-    size = gridSize.value;
-    for (let r = 0; r < size; r++) {
-        let row = document.createElement('div')
-        row.className = 'row';
-        for (let c = 0; c < size; c++) {
-            let column = document.createElement('div');
-            column.className = 'column';
-            row.appendChild(column)
-        }
-        document.getElementById('draw-wall').appendChild(row);
-    }
+    drawWall.style.gridTemplateColumns = `repeat(${size}, 1fr)`
+    drawWall.style.gridTemplateRows = `repeat(${size}, 1fr)`
 }
-makeGrid(4);
+
+
+
+
+
+
+
+
+
+
+
+window.onload = () => {
+    makeGrid(4);
+}
