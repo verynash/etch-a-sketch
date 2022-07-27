@@ -29,11 +29,11 @@ const clearBtn = document.getElementById('wallClear');
 const gridSizeSlider = document.getElementById('gridSizeSlider')
 const drawWall = document.getElementById('draw-wall');
 
-inputColor.oninput = () => setCurrentColor(e.target.value);
+inputColor.oninput = (e) => setCurrentColor(e.target.value);
 colorBtn.onclick = () => setCurrentMode('color');
 blackBtn.onclick = () => setCurrentMode('black');
 rainbowBtn.onclick = () => setCurrentMode('rainbow');
-grayscaleBtn.onclick = () => setCurrentMode('grayScale');
+grayscaleBtn.onclick = () => setCurrentMode('grayscale');
 eraserBtn.onclick = () => setCurrentMode('eraser');
 gridSizeSlider.onchange = (e) => changeSize(e.target.value);
 clearBtn.onclick = () => refreshGrid();
@@ -63,20 +63,61 @@ function makeGrid(size) {
     for (let i = 0; i < size*size; i++) {
         const gridSquare = document.createElement('div');
         gridSquare.classList.add('grid-square');
+        gridSquare.addEventListener('mouseover', changeColor);
+        gridSquare.addEventListener('mousedown', changeColor);
         drawWall.appendChild(gridSquare);
     }
 }
 
+function changeColor(e) {
+    if (e.type === 'mouseover' && !mouseDown) return;
+    if (currentMode === 'color') {
+        e.target.style.backgroundColor = currentColor;
+    } else if (currentMode === 'black') {
+        e.target.style.backgroundColor = '#070D0D';
+    } else if (currentMode === 'rainbow') {
+        const randomR = Math.floor(Math.random() * 255);
+        const randomG = Math.floor(Math.random() * 255);
+        const randomB = Math.floor(Math.random() * 255);
+        e.target.style.backgroundColor = `rgb(${randomR} ${randomG} ${randomB})`;
+    } else if (currentMode === 'grayscale') {
+        const randomGray = Math.floor(Math.random() * 255);
+        e.target.style.backgroundColor = `rgb(${randomGray} ${randomGray} ${randomGray})`;
+    } else if (currentMode === 'eraser') {
+        e.target.style.backgroundColor = 'rgb(240 255 240)';
+    }
+}
+
+function activateButton(newMode) {
+    if (currentMode === 'color') {
+        colorBtn.classList.remove('active');
+    } else if (currentMode === 'black') {
+        blackBtn.classList.remove('active');
+    } else if (currentMode === 'rainbow') {
+        rainbowBtn.classList.remove('active');
+    } else if (currentMode === 'grayscale') {
+        grayscaleBtn.classList.remove('active');
+    } else if (currentMode === 'eraser') {
+        eraserBtn.classList.remove('active');
+    }
+
+    if (newMode === 'color') {
+        colorBtn.classList.add('active');
+    } else if (newMode === 'black') {
+        blackBtn.classList.add('active');
+    } else if (newMode === 'rainbow') {
+        rainbowBtn.classList.add('active');
+    } else if (newMode === 'grayscale') {
+        grayscaleBtn.classList.add('active');
+    } else if (newMode === 'eraser') {
+        eraserBtn.classList.add('active');
+    }
 
 
-
-
-
-
-
-
+}
 
 
 window.onload = () => {
     makeGrid(DEFAULT_SIZE);
+    activateButton(DEFAULT_MODE);
 }
