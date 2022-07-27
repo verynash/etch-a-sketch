@@ -75,6 +75,66 @@ function makeGrid(size) {
     }
 }
 
+let rgbColors= [];
+let tmpR;
+let tmpG;
+let tmpB;
+
+
+function convertColor(color) {  
+    rgbColors = [];
+    ///////////////////////////////////
+    // Handle rgb(redValue, greenValue, blueValue) format
+    //////////////////////////////////
+    if (color[0]=='r')
+    {
+    // Find the index of the redValue.  Using subscring function to 
+    // get rid off "rgb(" and ")" part.  
+    // The indexOf function returns the index of the "(" and ")" which we 
+    // then use to get inner content.  
+    color=color.substring(color.indexOf('(')+1, color.indexOf(')'));
+    
+    // Notice here that we don't know how many digits are in each value,
+    // but we know that every value is separated by a comma.
+    // So split the three values using comma as the separator.
+    // The split function returns an object.
+    rgbColors=color.split(',', 3);
+
+    // Convert redValue to integer
+    rgbColors[0]=parseInt(rgbColors[0]);
+    // Convert greenValue to integer
+    rgbColors[1]=parseInt(rgbColors[1]);
+    // Convert blueValue to integer
+    rgbColors[2]=parseInt(rgbColors[2]);		
+    }
+
+    // Handles hex format
+    else if (color.substring(0,1)=="#") {
+    rgbColors[0]=color.substring(1, 3);  // redValue
+    rgbColors[1]=color.substring(3, 5);  // greenValue
+    rgbColors[2]=color.substring(5, 7);  // blueValue
+    // parseInt's second parameter is the base (16 for hexidecimal)
+    rgbColors[0]=parseInt(rgbColors[0], 16);
+    rgbColors[1]=parseInt(rgbColors[1], 16);
+    rgbColors[2]=parseInt(rgbColors[2], 16);
+    }
+    tmpR = rgbColors[0];
+    tmpG = rgbColors[1];
+    tmpB = rgbColors[2];
+    return (rgbColors, tmpR, tmpG, tmpB);
+}
+
+function darkenColor() {
+    if (tmpR <= 0 && tmpG <=0 && tmpB <=0) {
+        return (tmpR, tmpG, tmpB);
+    } else {
+        tmpR = tmpR - 25;
+        tmpG = tmpG - 25;
+        tmpB = tmpB - 25;
+        return (tmpR, tmpG, tmpB);
+    }
+}
+
 function changeColor(e) {
     if (e.type === 'mouseover' && !mouseDown) return;
     if (currentMode === 'color') {
@@ -87,8 +147,15 @@ function changeColor(e) {
         const randomB = Math.floor(Math.random() * 255);
         e.target.style.backgroundColor = `rgb(${randomR} ${randomG} ${randomB})`;
     } else if (currentMode === 'grayscale') {
-        const randomGray = Math.floor(Math.random() * 255);
-        e.target.style.backgroundColor = `rgb(${randomGray} ${randomGray} ${randomGray})`;
+        if (!e.target.style.backgroundColor) {
+            const randomGray = Math.floor(Math.random() * 255);
+            e.target.style.backgroundColor = `rgb(${randomGray} ${randomGray} ${randomGray})`;
+        } else {
+            let rgbTemp = e.target.style.backgroundColor;
+            convertColor(rgbTemp);
+            darkenColor();
+            e.target.style.backgroundColor = `rgb(${tmpR} ${tmpG} ${tmpB})`;
+        }
     } else if (currentMode === 'eraser') {
         e.target.style.backgroundColor = 'rgb(240 255 240)';
     }
@@ -118,8 +185,6 @@ function activateButton(newMode) {
     } else if (newMode === 'eraser') {
         eraserBtn.classList.add('active');
     }
-
-
 }
 
 window.onload = () => {
