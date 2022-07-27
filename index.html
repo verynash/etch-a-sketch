@@ -23,22 +23,20 @@
             <button class="pen-btn" id="penEraser">Eraser<img src="./images/eraser.png" width="24px" height="auto"></button>
             <!-- https://www.flaticon.com/free-icon/eraser_1827954 -->
         </div>
-        <div class="draw-wall">
-            <h2>Placeholder</h2>
+        <div id="draw-wall">
         </div>
         <div class="edit-wall">
-            <div class="clear-btn">
             <button id="wallClear">Clear
 
             </button>
-            </div>
             <div class="gridSizeSlider">
-                <input type="range" min="3" max="100" value="50" class="slider" id="gridSize">
+                <input type="range" min="3" max="100" value="4" class="slider" id="gridSizeSlider" step="1" onchange="updateSlider(this.value), deleteGrid(), makeGrid(this.value)">
             </div>
         </div>
     </div>
     <div class="footer">
-
+        <p>Copyright &copy; 2022 &#8212; verynash </p>
+        <a href="https://github.com/verynash"><img src="./images/github-logo.webp" width="24px" height="auto" alt="github link" id="githubLink"></a>
     </div>
 </body>
 </html>
