@@ -19,6 +19,8 @@ function setCurrentMode(newMode) {
     currentMode = newMode;
 }
 
+
+
 const inputColor = document.getElementById('inputColor');
 const colorBtn = document.getElementById('penColor');
 const blackBtn = document.getElementById('penBlack');
@@ -37,6 +39,10 @@ grayscaleBtn.onclick = () => setCurrentMode('grayscale');
 eraserBtn.onclick = () => setCurrentMode('eraser');
 gridSizeSlider.onchange = (e) => changeSize(e.target.value);
 clearBtn.onclick = () => refreshGrid();
+
+drawWall.addEventListener('dragstart', (e) => {
+    e.preventDefault()
+})
 
 let mouseDown = false;
 document.body.onmousedown = () => (mouseDown = true);
@@ -115,7 +121,6 @@ function activateButton(newMode) {
 
 
 }
-
 
 window.onload = () => {
     makeGrid(DEFAULT_SIZE);
