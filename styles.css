@@ -2,9 +2,16 @@ html {
     background: radial-gradient(circle at 100%, #46ffff, #3afc5a);
 }
 body {
+    margin: 0px;
+    display: flex;
+}
+.wrapper {
+    width: 100vw;
+    height: 100vh;
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
+    overflow: hidden;
 }
 .header-container {
     display: flex;
@@ -38,7 +45,7 @@ body {
 .pens-container {
     display: flex;
     flex-flow: row wrap;
-    gap: 6px;
+    gap: 8px;
     justify-content: center;
 }
 .pen-btn, #wallClear{
@@ -111,7 +118,7 @@ body {
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    width: 90%;
 }
 #sliderContainer {
     flex-shrink: 1;
@@ -158,9 +165,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    position: fixed;
-    left: 0;
-    bottom: 0;
+    margin-top: auto;
     width: 100%;
     background-color: #4fc7ff;
     text-align: center;
